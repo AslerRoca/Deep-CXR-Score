@@ -8,7 +8,7 @@ This repository describes the methodology used to develop **Deep-CXR-Score**, a 
 
 ### MRI
 
-![MRI scoring system](figure/mriscoresystem.png)
+![MRI scoring system](figures/mriscoresystem.png)
 
 Standardized chest MRI was performed after diagnosis or referral starting at ~3 months of age and then annually. Imaging was performed using three similar 1.5 T scanners from the same manufacturer (Magnetom Symphony, Magnetom Avanto, Magnetom Aera; Siemens Healthineers, Erlangen, Germany). Protocols were kept constant over the study period apart from minor adaptations to software versions (thesis references: 31, 20, 28, 29, 42, 43, 44, 23, 32, 46, 47).
 
