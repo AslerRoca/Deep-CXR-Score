@@ -73,36 +73,36 @@ Left and right lungs were analyzed separately. Each input is a 512×512 chest x-
 
 A combined loss was used to balance pointwise accuracy and agreement with summed MRI scores:
 
-\[
+$$
 L_C = \alpha L_E + \beta L_P + \gamma L_{\rho}, \qquad
 \alpha,\beta,\gamma>0,\ \alpha+\beta+\gamma=1.
-\]
+$$
 
 Where:
 
 - Cross-entropy loss:
 
-\[
+$$
 L_E = -\frac{1}{N}\sum_{i=1}^{N}\left[
 y_i \ln x_i + (1-y_i)\ln(1-x_i)
 \right]
-\]
+$$
 
 - Pearson-correlation loss:
 
-\[
+$$
 L_P = 1-\mathrm{corr}_P(x,y)
 = 1-\frac{\sum_{i=1}^{N}(x_i-\bar x)(y_i-\bar y)}
 {\sqrt{\sum_{i=1}^{N}(x_i-\bar x)^2}\sqrt{\sum_{i=1}^{N}(y_i-\bar y)^2}}
-\]
+$$
 
-- Spearman-correlation loss (with ranks \(r_i=\mathrm{rank}(x_i)\), \(s_i=\mathrm{rank}(y_i)\)):
+- Spearman-correlation loss (with ranks $r_i=\mathrm{rank}(x_i)$, $s_i=\mathrm{rank}(y_i)$):
 
-\[
+$$
 L_{\rho} = 1-\mathrm{corr}_S(x,y)
 = 1-\frac{\sum_{i=1}^{N}(r_i-\bar r)(s_i-\bar s)}
 {\sqrt{\sum_{i=1}^{N}(r_i-\bar r)^2}\sqrt{\sum_{i=1}^{N}(s_i-\bar s)^2}}
-\]
+$$
 
 Weights were tuned on the validation set; the final model used \(\alpha=0.5\), \(\beta=0.3\), \(\gamma=0.2\), emphasizing classification error while enforcing linear and ordinal agreement with MRI reference scores.
 
@@ -113,39 +113,3 @@ AdamW (thesis reference: adam) was used with step-decay learning-rate scheduling
 #### Visualization of activation maps (Grad-CAM)
 
 Grad-CAM was used to visualize model attention (thesis reference: 52). The pretrained ResNet-50 was run on all test-set x-rays, attention maps were computed from the fourth convolutional layer (feeding lobar predictions), and maps were aligned, normalized, and averaged across the test cohort to create a composite activation map.
-
----
-
-## Statistical analyses
-
-A 3-class F1 score was used to evaluate lobar-level prediction quality:
-
-\[
-0.10-0.50=\text{not good},\quad
-0.50-0.80=\text{ok},\quad
-0.80-0.90=\text{good},\quad
-0.90-1.00=\text{very good}.
-\]
-
-Agreement between predicted and reference lobar scores was assessed using **linear weighted Cohen’s kappa**:
-
-\[
-\le 0=\text{no agreement},\quad
-0.01-0.20=\text{none to slight},\quad
-0.21-0.40=\text{fair},\quad
-0.41-0.60=\text{moderate},\quad
-0.61-0.80=\text{substantial},\quad
-0.81-1.00=\text{almost perfect agreement}.
-\]
-
-Spearman rank correlation \(\rho\) was used to compare predicted and reference summary scores, interpreted as:
-
-\[
-0.10-0.39=\text{weak},\quad
-0.40-0.69=\text{moderate},\quad
-0.70-0.89=\text{strong},\quad
-0.90-1.00=\text{very strong}
-\]
-(thesis reference: 35).
-
-Group comparisons used Mann–Whitney U tests; score changes were assessed via ANOVA on ranks and Wilcoxon signed-rank tests. Statistical significance was set at **P < 0.05**. Multiple-comparison correction (e.g., Bonferroni–Holm) was applied as appropriate.
