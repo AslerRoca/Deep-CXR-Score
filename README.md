@@ -44,16 +44,16 @@ An initial nnU-Net was trained on the open-source Montgomery County chest x-ray 
 
 ---
 
-## Hybrid AI scoring model
+## Model for Deep-CXR-Score
 
-![Hybrid AI scoring model](figures/experimentaldesign.png)
+![Hybrid AI scoring model](figures/newfluss_prediction.png)
 
 The study comprised two components:
 
 - A **ResNet-50** model predicting item-level visual MRI scores from a single frontal chest x-ray.
 - A **centroid-based classifier** using PFT parameters transformed into a 13-level quantitative scale, providing an independent “backup” estimate for MRI perfusion-related severity.
 
-### Deep learning chest x-ray–predicted MRI score system
+### Deep learning score chest x-ray with same-day MRI score as ground truth
 
 Because the MRI scoring system is defined at lobar level, score items were treated independently by lobe. Due to limited lobar information in frontal x-rays, paired lung-half x-rays and corresponding MRI scores were generated and used to predict the target scoring system.
 
@@ -113,14 +113,6 @@ AdamW (thesis reference: adam) was used with step-decay learning-rate scheduling
 #### Visualization of activation maps (Grad-CAM)
 
 Grad-CAM was used to visualize model attention (thesis reference: 52). The pretrained ResNet-50 was run on all test-set x-rays, attention maps were computed from the fourth convolutional layer (feeding lobar predictions), and maps were aligned, normalized, and averaged across the test cohort to create a composite activation map.
-
-### Centroid-based PFT-predicted MRI perfusion score
-
-A centroid classifier clustered PFT measurements into 13 groups. New observations were assigned to the nearest training centroid using Euclidean distance. Because clinical records included three patterns—(1) both ppFEV1 and LCI, (2) ppFEV1 only, (3) LCI only—separate centroid classifiers were trained and tested for each scenario, allowing selection based on available PFT data.
-
-### Hybrid-predicted score combining chest x-ray and PFT
-
-The final system integrates both approaches. The ResNet-50 provides primary predictions from chest x-ray. When at least one lung function metric (LCI or ppFEV1) is available, the centroid classifier is used to estimate MRI perfusion score as a complementary component. Reported hybrid results include only cases where the MRI score corresponds with both chest x-ray and at least one PFT metric.
 
 ---
 
