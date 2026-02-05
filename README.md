@@ -6,6 +6,8 @@ This repository describes the methodology used to develop **Deep-CXR-Score**, a 
 
 ## Image acquisition and assessment
 
+All data was acquired at two different sites within the same institution, the Children’s Hospital at University Hospital Heidelberg, caring for PwCF of minor age, and the Thoraxklinik at University Hospital Heidelberg, caring for adult PwCF.
+
 ### MRI
 
 ![MRI scoring system](figures/mriscoresystem.png)
@@ -113,3 +115,9 @@ AdamW (thesis reference: adam) was used with step-decay learning-rate scheduling
 #### Visualization of activation maps (Grad-CAM)
 
 Grad-CAM was used to visualize model attention (thesis reference: 52). The pretrained ResNet-50 was run on all test-set x-rays, attention maps were computed from the fourth convolutional layer (feeding lobar predictions), and maps were aligned, normalized, and averaged across the test cohort to create a composite activation map.
+
+## Statistic
+3 classes F1 score has been chosen to evaluate the quality of prediction in lobar level which can be interpreted as follows: 0.10 - 0.50 = not good, 0.50 - 0.80 = ok, 0.80 - 0.90 = good, 0.90 - 1.00 = very good. To evaluate the agreement between predicted score and MRI scores in lobar level, linear weighted Cohen’s Kappa κ has been employed and can be interpreted as follows: ≤ 0 = no agreement, 0.01–0.20 = none to slight, 0.21–0.40 = fair, 0.41– 0.60 = moderate, 0.61–0.80 = substantial, and 0.81–1.00 = almost perfect agreement. Loss function combined cross entropy and correlation loss function has been chosen to quantify the difference between predict and target. The Spearman rank correlation coefficient ρ was calculated for measurements of agreement between predicted summary scores vs. MRI summary scores, and interpreted as follows: 0.10 - 0.39 = weak, 0.40 - 0.69 = moderate, 0.70 - 0.89 = strong, 0.90 - 1.00 = very strong [E28]. Comparison between groups was performed by Wilcoxon signed rank test. A P-value <0.05 was considered statistically significant considering corrections for multiple testing. Please note that all analyses involving the Deep-CXR-Score were performed exclusively in the test dataset. Analyses only among MRI scores, Chrispin–Norman scores, and pulmonary function tests were conducted in the combined validation and test cohorts.
+
+
+
