@@ -27,10 +27,9 @@ The modified Chrispin–Norman score grades CF lung damage on a single frontal f
 ---
 
 ## Image preprocessing
-
-Image preprocessing consisted of two main steps: chest x-ray size normalization and ROI selection. FFT-based resizing was used for normalization. ROI selection included lung region cropping and separation of left and right lung regions; both were performed using two trained nnU-Net models (thesis references: 33, 51).
-
 ![Workflow for chest x-ray preprocessing](figures/fluss_scoring.drawio.png)
+
+Image preprocessing consisted of two main steps: chest x-ray size normalization and ROI selection. FFT-based resizing was used for normalization. ROI selection included lung region cropping and separation of left and right lung regions; both were performed using two trained nnU-Net models. Through the application of Fast Fourier Transformation, CXR images were uniformly resized to a resolution of 512x512 pixels. Lung halves were automatically segmented using nnU-Net for the training, validation and testing. The same-day chest MRI scores for individual pathologies were likewise separated by lung halves to enable pairing with the input images.
 
 ### Chest x-ray ROI selection
 
@@ -48,12 +47,9 @@ An initial nnU-Net was trained on the open-source Montgomery County chest x-ray 
 
 ## Model for Deep-CXR-Score
 
-![Hybrid AI scoring model](figures/newfluss_prediction.png)
+![AI scoring model](figures/newfluss_prediction.png)
 
-The study comprised two components:
-
-- A **ResNet-50** model predicting item-level visual MRI scores from a single frontal chest x-ray.
-- A **centroid-based classifier** using PFT parameters transformed into a 13-level quantitative scale, providing an independent “backup” estimate for MRI perfusion-related severity.
+The study comprised **ResNet-50** model predicting item-level visual MRI scores from a single frontal chest x-ray.
 
 ### Deep learning score chest x-ray with same-day MRI score as ground truth
 
