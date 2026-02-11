@@ -111,14 +111,14 @@ AdamW (thesis reference: adam) was used with step-decay learning-rate scheduling
 ## Statistic
 3 classes F1 score has been chosen to evaluate the quality of prediction in lobar level which can be interpreted as follows: 0.10 - 0.50 = not good, 0.50 - 0.80 = ok, 0.80 - 0.90 = good, 0.90 - 1.00 = very good. To evaluate the agreement between predicted score and MRI scores in lobar level, linear weighted Cohen’s Kappa κ has been employed and can be interpreted as follows: ≤ 0 = no agreement, 0.01–0.20 = none to slight, 0.21–0.40 = fair, 0.41– 0.60 = moderate, 0.61–0.80 = substantial, and 0.81–1.00 = almost perfect agreement. Loss function combined cross entropy and correlation loss function has been chosen to quantify the difference between predict and target. The Spearman rank correlation coefficient ρ was calculated for measurements of agreement between predicted summary scores vs. MRI summary scores, and interpreted as follows: 0.10 - 0.39 = weak, 0.40 - 0.69 = moderate, 0.70 - 0.89 = strong, 0.90 - 1.00 = very strong. Comparison between groups was performed by Wilcoxon signed rank test. A P-value <0.05 was considered statistically significant considering corrections for multiple testing. Please note that all analyses involving the Deep-CXR-Score were performed exclusively in the test dataset. Analyses only among MRI scores, Chrispin–Norman scores, and pulmonary function tests were conducted in the combined validation and test cohorts.
 
-## Results
-![Comparsion of Deep-CXR-Score, MRI score and Chrispin-Norman score in patient level.](figures/figure_correlation_patientlevel.jpg)
-### Moderate to high within-patient consistency across repeated measurements
+## Supplementary Results
+![Comparsion of Deep-CXR-Score, MRI score and Chrispin-Norman score in patient level.](figures/figure_correlation_patientlevel_b.jpg)
+
 In the test cohort, ICC was 0.68 for the composite Deep-CXR-Score. In the combined test and validation cohorts, ICCs were 0.53 for the MRI global score, 0.73 for the Chrispin–Norman score, 0.86 for ppFEV1, and 0.64 for LCI.
-### Improved correlation of the Deep-CXR-Score with the chest MRI score in people with cystic fibrosis
+
 Fisher’s r-to-z transformation and Setiger’s test showed that the correlation of the composite Deep-CXR-Score with the MRI global score was significantly improved compared to the Chrispin-Norman score (Z=2.05, P<0.05).
 In patient level analyses, the composite Deep-CXR-Score showed strong correlation with the MRI global score (ρ=0.85, P<0.001). By comparison, the Chrispin-Norman score correlated moderately with the MRI global score (ρ=0.65, P<0.001). 
-### Improved correlation of the Deep-CXR-Score with pulmonary function testing in people with cystic fibrosis
+
 Fisher’s r-to-z transformation and Setiger’s test confirmed that the correlation of the composite Deep-CXR-Score with ppFEV1 (Z=-3.28, P<0.001) and LCI (Z=2.38, P<0.01) was significantly improved compared to the Chrispin-Norman score.
 In patient level analyses, the composite Deep-CXR-Score correlated strongly with ppFEV1 (ρ=-0.77, P<0.01) and LCI (ρ=0.74, P<0.005). By comparison, the Chrispin-Norman score showed a moderate correlation with ppFEV1 (ρ=-0.63, P<0.005) and LCI (ρ=0.58, P<0.005). The MRI global score correlated moderate with ppFEV1 (ρ=-0.68, P<0.001) but strongly with LCI (ρ=0.85, P<0.001).
 
