@@ -1,6 +1,6 @@
 # Deep-CXR-Score
 
-This repository describes the methodology used to develop **Deep-CXR-Score**, a hybrid AI system that predicts visual chest MRI scores in cystic fibrosis (CF) using frontal chest x-ray and pulmonary function tests (PFT).
+This repository describes the methodology used to develop **Deep-CXR-Score**, a hybrid AI system that predicts visual chest MRI scores in cystic fibrosis (CF) using frontal chest x-ray and pulmonary function tests (PFTs).
 
 ---
 
@@ -12,15 +12,15 @@ All data was acquired at two different sites within the same institution, the Ch
 
 ![MRI scoring system](figures/mriscoresystem.png)
 
-Standardized chest MRI was performed after diagnosis or referral starting at ~3 months of age and then annually. Imaging was performed using three similar 1.5 T scanners from the same manufacturer (Magnetom Symphony, Magnetom Avanto, Magnetom Aera; Siemens Healthineers, Erlangen, Germany). Protocols were kept constant over the study period apart from minor adaptations to software versions (thesis references: 31, 20, 28, 29, 42, 43, 44, 23, 32, 46, 47).
+Standardized chest MRI was performed after diagnosis or referral starting at ~3 months of age and then annually. Imaging was performed using three similar 1.5 T scanners from the same manufacturer (Magnetom Symphony, Magnetom Avanto, Magnetom Aera; Siemens Healthineers, Erlangen, Germany). Protocols were kept constant over the study period apart from minor adaptations to software versions.
 
 In brief, T1-weighted sequences before and after IV contrast and T2-weighted sequences before contrast were acquired. Four-dimensional lung perfusion imaging used macrocyclic gadolinium-based contrast agents (0.1 mmol/kg body weight of gadobutrol or gadoteric acid) injected at 3–5 ml/s. Children ≤ 5 years were routinely sedated with oral or rectal chloral hydrate (100 mg/kg, max 2 g) and monitored with MR-compatible pulse oximetry. Renal function was checked before contrast administration. Contrast required for 4D perfusion imaging was avoided in infancy due to prescription regulations.
 
-All MRI examinations were assessed by the same validated reader (MOW) using the established scoring system (thesis references: 31, 20, 28, 29, 42, 43, 44, 23, 32, 46, 47, 25). Prior MRI results were available to the reader for comparison. Each lobe and the lingula were scored as 0 (absent), 1 (<50% involved), or 2 (≥50% involved) for bronchiectasis/wall thickening, mucus plugging, sacculation/abscess, consolidation, special finding/pleural lesion, and perfusion abnormalities. Morphology items sum to the MRI morphology score, perfusion abnormalities sum to the MRI perfusion score, and both sum to the MRI global score (0–72).
+All MRI examinations were assessed by the same validated reader (MOW) using the established scoring system. Prior MRI results were available to the reader for comparison. Each lobe and the lingula were scored as 0 (absent), 1 (<50% involved), or 2 (≥50% involved) for bronchiectasis/wall thickening, mucus plugging, sacculation/abscess, consolidation, special finding/pleural lesion, and perfusion abnormalities. Morphology items sum to the MRI morphology score, perfusion abnormalities sum to the MRI perfusion score, and both sum to the MRI global score (0–72).
 
 ### Chest x-ray
 
-All chest x-rays were acquired in either posterior–anterior or anterior–posterior projection. Chest x-rays used for ETI evaluation were scored using the modified Chrispin–Norman score (frontal view only) by the same reader (MOW) (thesis references: cn_1, cn_2).
+All chest x-rays were acquired in either posterior–anterior or anterior–posterior projection. Chest x-rays used for ETI evaluation were scored using the modified Chrispin–Norman score (frontal view only) by the same reader (MOW).
 
 The modified Chrispin–Norman score grades CF lung damage on a single frontal film. The image is divided into four lung quadrants. Four radiographic features are assessed—bronchial line (tram-track) shadows, ring shadows, mottled (nodular) shadows, and large soft shadows representing consolidation or atelectasis. Each feature is scored per quadrant on a 3-point scale (0 = absent, 1 = mild, 2 = marked), yielding a maximum of 32 points.
 
@@ -57,7 +57,7 @@ Because the MRI scoring system is defined at lobar level, score items were treat
 
 #### ResNet-50 training
 
-A modified ResNet-50 architecture (thesis reference: 34) was trained on a single NVIDIA RTX 3060 GPU. The model was fitted on the training set, tuned on the validation set to select the best checkpoint, and evaluated on an independent test set. The model outputs lobar-level MRI scores for bronchiectasis/wall thickening, sacculation/abscess, mucus plugging, consolidation, special findings, and perfusion.
+A modified ResNet-50 architecture was trained on a single NVIDIA RTX 3060 GPU. The model was fitted on the training set, tuned on the validation set to select the best checkpoint, and evaluated on an independent test set. The model outputs lobar-level MRI scores for bronchiectasis/wall thickening, sacculation/abscess, mucus plugging, consolidation, special findings, and perfusion.
 
 #### Modified architecture
 
@@ -109,7 +109,7 @@ Weights were tuned on the validation set; the final model used \(\alpha=0.5\), \
 AdamW (thesis reference: adam) was used with step-decay learning-rate scheduling. The best initial learning rate in this study was 0.0003.
 
 ## Statistic
-3 classes F1 score has been chosen to evaluate the quality of prediction in lobar level which can be interpreted as follows: 0.10 - 0.50 = not good, 0.50 - 0.80 = ok, 0.80 - 0.90 = good, 0.90 - 1.00 = very good. To evaluate the agreement between predicted score and MRI scores in lobar level, linear weighted Cohen’s Kappa κ has been employed and can be interpreted as follows: ≤ 0 = no agreement, 0.01–0.20 = none to slight, 0.21–0.40 = fair, 0.41– 0.60 = moderate, 0.61–0.80 = substantial, and 0.81–1.00 = almost perfect agreement. Loss function combined cross entropy and correlation loss function has been chosen to quantify the difference between predict and target. The Spearman rank correlation coefficient ρ was calculated for measurements of agreement between predicted summary scores vs. MRI summary scores, and interpreted as follows: 0.10 - 0.39 = weak, 0.40 - 0.69 = moderate, 0.70 - 0.89 = strong, 0.90 - 1.00 = very strong [E28]. Comparison between groups was performed by Wilcoxon signed rank test. A P-value <0.05 was considered statistically significant considering corrections for multiple testing. Please note that all analyses involving the Deep-CXR-Score were performed exclusively in the test dataset. Analyses only among MRI scores, Chrispin–Norman scores, and pulmonary function tests were conducted in the combined validation and test cohorts.
+3 classes F1 score has been chosen to evaluate the quality of prediction in lobar level which can be interpreted as follows: 0.10 - 0.50 = not good, 0.50 - 0.80 = ok, 0.80 - 0.90 = good, 0.90 - 1.00 = very good. To evaluate the agreement between predicted score and MRI scores in lobar level, linear weighted Cohen’s Kappa κ has been employed and can be interpreted as follows: ≤ 0 = no agreement, 0.01–0.20 = none to slight, 0.21–0.40 = fair, 0.41– 0.60 = moderate, 0.61–0.80 = substantial, and 0.81–1.00 = almost perfect agreement. Loss function combined cross entropy and correlation loss function has been chosen to quantify the difference between predict and target. The Spearman rank correlation coefficient ρ was calculated for measurements of agreement between predicted summary scores vs. MRI summary scores, and interpreted as follows: 0.10 - 0.39 = weak, 0.40 - 0.69 = moderate, 0.70 - 0.89 = strong, 0.90 - 1.00 = very strong. Comparison between groups was performed by Wilcoxon signed rank test. A P-value <0.05 was considered statistically significant considering corrections for multiple testing. Please note that all analyses involving the Deep-CXR-Score were performed exclusively in the test dataset. Analyses only among MRI scores, Chrispin–Norman scores, and pulmonary function tests were conducted in the combined validation and test cohorts.
 
 ## Results
 ![Comparsion of Deep-CXR-Score, MRI score and Chrispin-Norman score in patient level.](figures/figure_correlation_patientlevel.jpg)
